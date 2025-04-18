@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import './TeacherDashboard.css';
+import { getAuthHeaders, checkAndHandleAuthError } from '../utils/auth';
 
 function AddCourseEvent() {
   const [mode, setMode] = useState('course');
@@ -15,12 +16,14 @@ function AddCourseEvent() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  // 🔐 Redirect to login if not authenticated
+  // ✅ Redirect if not logged in as faculty
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      alert("You must be logged in.");
-      navigate('/login');
+    const username = localStorage.getItem('username');
+    const role = localStorage.getItem('role');
+    if (!username || role !== 'faculty') {
+      alert("You must be logged in as faculty.");
+      localStorage.clear();
+      navigate('/');
     }
   }, [navigate]);
 
@@ -54,12 +57,11 @@ function AddCourseEvent() {
     try {
       const res = await fetch(`http://localhost:8000/faculty/${endpoint}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}` // 🔐 secure token
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify(payload)
       });
+
+      if (!checkAndHandleAuthError(res, navigate)) return;
 
       const data = await res.json();
       if (res.ok) {
@@ -69,6 +71,7 @@ function AddCourseEvent() {
         alert('Error: ' + (data.detail || 'Something went wrong.'));
       }
     } catch (error) {
+      console.error("Submission error:", error);
       alert('Something went wrong.');
     }
   };
@@ -83,10 +86,16 @@ function AddCourseEvent() {
           <div style={{ marginBottom: '1rem' }}>
             <button
               className={mode === 'course' ? 'blue-btn' : ''}
-              onClick={() => setMode('course')}>Course</button>
+              onClick={() => setMode('course')}
+            >
+              Course
+            </button>
             <button
               className={mode === 'event' ? 'blue-btn' : ''}
-              onClick={() => setMode('event')}>Event</button>
+              onClick={() => setMode('event')}
+            >
+              Event
+            </button>
           </div>
 
           <input
@@ -131,7 +140,9 @@ function AddCourseEvent() {
             </>
           )}
 
-          <button className="blue-btn" onClick={handleSubmit}>Submit</button>
+          <button className="blue-btn" onClick={handleSubmit}>
+            Submit
+          </button>
         </div>
       </div>
       <Footer />

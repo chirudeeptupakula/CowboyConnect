@@ -3,31 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import './StudentCourseCatalog.css';
+import { getAuthHeaders, checkAndHandleAuthError } from '../utils/auth';
 
 function StudentCourseCatalog() {
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
 
   const fetchCourses = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
     try {
       const res = await fetch('http://localhost:8000/student/courses', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        headers: getAuthHeaders()
       });
 
-      if (!res.ok) {
-        if (res.status === 401) {
-          alert("Session expired. Please log in again.");
-          handleLogout();
-          return;
-        }
-        const err = await res.json();
-        throw new Error(err.detail || "Failed to load courses");
-      }
+      if (!checkAndHandleAuthError(res, navigate)) return;
 
       const data = await res.json();
       setCourses(data);
@@ -38,17 +26,13 @@ function StudentCourseCatalog() {
   };
 
   const handleRegister = async (courseId) => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
     try {
       const res = await fetch(`http://localhost:8000/student/register-course/${courseId}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
+        headers: getAuthHeaders()
       });
+
+      if (!checkAndHandleAuthError(res, navigate)) return;
 
       const data = await res.json();
       if (res.ok) {
@@ -60,11 +44,6 @@ function StudentCourseCatalog() {
       console.error("Registration error:", error);
       alert("Something went wrong!");
     }
-  };
-
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate('/');
   };
 
   useEffect(() => {

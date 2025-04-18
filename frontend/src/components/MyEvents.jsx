@@ -3,31 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import './TeacherDashboard.css';
+import { getAuthHeaders, checkAndHandleAuthError } from '../utils/auth';
 
 function MyEvents() {
   const [events, setEvents] = useState([]);
   const navigate = useNavigate();
 
   const fetchEvents = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
     try {
       const res = await fetch("http://localhost:8000/faculty/my-events", {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        headers: getAuthHeaders()
       });
 
-      if (!res.ok) {
-        if (res.status === 401) {
-          alert("Session expired. Please login again.");
-          handleLogout();
-          return;
-        }
-        const err = await res.json();
-        throw new Error(err.detail || "Failed to load events");
-      }
+      if (!checkAndHandleAuthError(res, navigate)) return;
 
       const data = await res.json();
       setEvents(data);
@@ -37,16 +25,11 @@ function MyEvents() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate('/');
-  };
-
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("userRole");
+    const username = localStorage.getItem("username");
+    const role = localStorage.getItem("role");
 
-    if (!token || role !== "faculty") {
+    if (!username || role !== "faculty") {
       alert("Unauthorized access. Please login.");
       navigate('/');
     } else {

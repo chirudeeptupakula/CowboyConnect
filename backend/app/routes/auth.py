@@ -1,20 +1,22 @@
-# ✅ File: backend/app/routes/auth.py (updated login with JWT)
+# ✅ File: backend/app/routes/auth.py
 
 from fastapi import APIRouter, Depends, HTTPException, Body
 from sqlalchemy.orm import Session
-from backend.app import models, schemas
-from backend.app.database import get_db
-from backend.app.utils import hash_password, verify_password
+from app import models, schemas
+from app.database import get_db
+from app.utils import hash_password, verify_password
 from jose import jwt
 import os
 from datetime import datetime, timedelta
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
+# Secret and algorithm for JWT
 SECRET_KEY = os.getenv("SECRET_KEY", "supersecretkey")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
+# ✅ Registration Route
 @router.post("/register")
 def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = models.User(**user.dict())
@@ -25,6 +27,7 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return {"status": "success", "user_id": db_user.id}
 
 
+# ✅ Login Route
 @router.post("/login")
 def login_user(data: dict = Body(...), db: Session = Depends(get_db)):
     username = data.get("username")
@@ -37,14 +40,16 @@ def login_user(data: dict = Body(...), db: Session = Depends(get_db)):
     payload = {
         "sub": str(user.id),
         "username": user.username,
-        "role": user.role.value,
-        "exp": datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        "role": user.role.value,  # ✅ .value gets "student", "faculty", or "admin"
+        "exp": datetime.utcnow() + timedelta(minutes=60)
     }
+
     token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
     return {
         "access_token": token,
         "token_type": "bearer",
         "username": user.username,
-        "role": user.role
+        "role": user.role.value  # ✅ convert enum to string
     }
+

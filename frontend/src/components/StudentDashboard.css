@@ -56,4 +56,49 @@
 }
 
 
+  .tile {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+.student-tile-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.tile {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+  width: 250px;
+}
+
+.joined-label {
+  color: green;
+  font-weight: bold;
+}
+.tile-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.dashboard-tile {
+  background-color: #f7f8fa;
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  width: 220px;
+  text-align: center;
+}
+
+.dashboard-tile:hover {
+  transform: translateY(-5px);
+}
 
