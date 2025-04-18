@@ -9,9 +9,10 @@ function StudentDashboard() {
   return (
     <>
       <Header />
+
       <div className="dashboard-wrapper">
-        <div className="dashboard-card">
-          <h2>Welcome Student 👋</h2>
+        <div className="dashboard-content">
+          <h2 className="welcome-text">Welcome Student 👋</h2>
           <div className="tile-container">
             <div className="tile" onClick={() => navigate('/courses')}>
               <h3>📘 Courses</h3>
@@ -29,6 +30,7 @@ function StudentDashboard() {
           </div>
         </div>
       </div>
+
       <Footer />
     </>
   );

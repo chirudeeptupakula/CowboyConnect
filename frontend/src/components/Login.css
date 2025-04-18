@@ -1,3 +1,4 @@
+/* Login page layout with animated background */
 .login-page {
   position: relative;
   display: flex;
@@ -6,22 +7,35 @@
   align-items: center;
   min-height: 100vh;
   background-color: #ffffff;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   padding-top: 4rem;
   padding-bottom: 4rem;
   overflow: hidden;
-  opacity: 0;
-  animation: backgroundFadeIn 2s ease-in-out forwards;
+  z-index: 0;
 }
 
-@keyframes backgroundFadeIn {
+/* Faded background image using pseudo-element */
+.login-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('/public/ Background_login.png') center/cover no-repeat;
+  opacity: 1;
+  animation: fadeInBackground 2s ease-in-out forwards;
+  z-index: -1;
+}
+
+
+/* Background fade-in keyframes */
+@keyframes fadeInBackground {
   to {
-    opacity: 1;
+    opacity: 0.4; /* Keep it softly visible */
   }
 }
 
+/* Login card container */
 .login-container {
   background-color: rgba(249, 249, 249, 0.92);
   padding: 2rem 3rem;
@@ -34,11 +48,13 @@
   z-index: 1;
 }
 
+/* Card fade-in */
 @keyframes fadeInCard {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Input fields */
 .login-container input {
   width: 100%;
   margin-bottom: 1rem;
@@ -59,16 +75,20 @@
   width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
-  background-color: #3a86ff;
   color: white;
   border: none;
-  border-radius: 25px;
+  border-radius: 999px;              /* Fully curved (pill style) */
   cursor: pointer;
   margin-top: 0.75rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .blue-btn:hover {
-  background-color: #266bdc;
+  background-color: #266bdc;         /* Darker blue on hover */
   transform: scale(1.02);
 }
+.blue-btn {
+  background-color: #3a86ff !important;
+   border-radius: 999px !important;
+}
+

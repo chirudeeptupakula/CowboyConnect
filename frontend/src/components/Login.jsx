@@ -41,10 +41,8 @@ function Login() {
   return (
     <>
       <Header />
-      <div
-        className="login-page"
-        style={{ backgroundImage: `url('/Background_login.png')` }}
-      >
+
+      <div className="login-page">
         <div className="login-container">
           <input
             type="text"
