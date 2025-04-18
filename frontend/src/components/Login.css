@@ -71,21 +71,24 @@
   box-shadow: 0 0 5px rgba(58, 134, 255, 0.3);
 }
 
-/* Sky blue buttons */
 .blue-btn {
   width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
-  background-color: #3a86ff;
   color: white;
   border: none;
-  border-radius: 25px;
+  border-radius: 999px;              /* Fully curved (pill style) */
   cursor: pointer;
   margin-top: 0.75rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .blue-btn:hover {
-  background-color: #266bdc;
+  background-color: #266bdc;         /* Darker blue on hover */
   transform: scale(1.02);
 }
+.blue-btn {
+  background-color: #3a86ff !important;
+   border-radius: 999px !important;
+}
+
