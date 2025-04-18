@@ -7,6 +7,7 @@ import StudentDashboard from './components/StudentDashboard';
 import StudentCourseCatalog from './components/StudentCourseCatalog';
 import StudentMyCourses from './components/StudentMyCourses';
 import StudentClubs from './components/StudentClubs';
+import ClubDetails from './components/ClubDetails'; // ✅ New component for /club/:id
 
 // 👨‍🏫 Faculty/Teacher Components
 import TeacherDashboard from './components/TeacherDashboard';
@@ -29,6 +30,7 @@ function App() {
         <Route path="/student/my-courses" element={<StudentMyCourses />} />
         <Route path="/courses" element={<StudentCourseCatalog />} />
         <Route path="/student-clubs" element={<StudentClubs />} />
+        <Route path="/club/:id" element={<ClubDetails />} /> {/* ✅ View specific club */}
 
         {/* 👨‍🏫 Teacher Routes */}
         <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
