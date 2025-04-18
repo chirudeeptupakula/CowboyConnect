@@ -19,3 +19,50 @@
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); /* for contrast and clarity */
   letter-spacing: 1px;
 }
+.user-pill-wrapper {
+  position: absolute;
+  top: 50%;
+  right: 4rem;
+  transform: translateY(-50%);
+  z-index: 999;
+}
+
+.user-pill {
+  background-color: #007f7f;
+  color: white;
+  font-weight: 600;
+  padding: 0.4rem 1.2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.user-pill:hover {
+  background-color: #006666;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 2.6rem;
+  right: 0;
+  background-color: black;
+  color: white; /* ✅ make text visible on black background */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 150px;
+  z-index: 1000;
+}
+
+.dropdown-menu div {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: white; /* ✅ ensure each option is also white */
+}
+
+.dropdown-menu div:hover {
+  background-color: #333333; /* ✅ subtle hover color */
+}
+
+

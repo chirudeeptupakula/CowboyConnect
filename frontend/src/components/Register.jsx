@@ -15,8 +15,11 @@ function Register() {
     department: '',
     username: '',
     password: '',
-    role: 'student'  // ✅ Default role
+    role: 'student'
   });
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -34,21 +37,26 @@ function Register() {
           username: form.username,
           password: form.password,
           department: form.department,
-          role: form.role  // ✅ Include role
+          role: form.role
         })
       });
 
       const data = await res.json();
       if (res.ok) {
-        alert("Registration successful!");
-        navigate('/');
+        setModalMessage("✅ Registration successful!");
+        setShowModal(true);
+        setTimeout(() => {
+          setShowModal(false);
+          navigate('/');
+        }, 2000);
       } else {
-        console.error("Registration Error:", data);
-        alert("Error: " + (data.detail || "Registration failed"));
+        setModalMessage("❌ Error: " + (data.detail || "Registration failed"));
+        setShowModal(true);
       }
     } catch (error) {
       console.error("Register Error:", error);
-      alert("Something went wrong!");
+      setModalMessage("❌ Something went wrong!");
+      setShowModal(true);
     }
   };
 
@@ -58,61 +66,26 @@ function Register() {
       <div className="register-page">
         <div className="register-container">
           <h2>Create Account</h2>
-          <input
-            type="text"
-            name="firstName"
-            placeholder="First Name"
-            value={form.firstName}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Last Name"
-            value={form.lastName}
-            onChange={handleChange}
-          />
-          <input
-            type="tel"
-            name="phone"
-            placeholder="Phone Number"
-            value={form.phone}
-            onChange={handleChange}
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="department"
-            placeholder="Department"
-            value={form.department}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={form.username}
-            onChange={handleChange}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
-          />
-
-
+          <input type="text" name="firstName" placeholder="First Name" value={form.firstName} onChange={handleChange} />
+          <input type="text" name="lastName" placeholder="Last Name" value={form.lastName} onChange={handleChange} />
+          <input type="tel" name="phone" placeholder="Phone Number" value={form.phone} onChange={handleChange} />
+          <input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} />
+          <input type="text" name="department" placeholder="Department" value={form.department} onChange={handleChange} />
+          <input type="text" name="username" placeholder="Username" value={form.username} onChange={handleChange} />
+          <input type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange} />
           <button className="blue-btn" onClick={handleRegister}>Register</button>
           <button className="blue-btn" onClick={() => navigate('/')}>Back to Login</button>
         </div>
       </div>
+
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <p>{modalMessage}</p>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </>
   );
