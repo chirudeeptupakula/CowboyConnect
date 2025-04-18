@@ -10,7 +10,6 @@ function StudentClubs() {
   const [joinedClubIds, setJoinedClubIds] = useState([]);
   const navigate = useNavigate();
 
-  // 🔁 Fetch all clubs
   const fetchClubs = async () => {
     try {
       const res = await fetch("http://localhost:8000/student/clubs", {
@@ -25,7 +24,6 @@ function StudentClubs() {
     }
   };
 
-  // 🔁 Fetch joined club IDs
   const fetchJoinedClubs = async () => {
     try {
       const res = await fetch("http://localhost:8000/student/my-clubs", {
@@ -40,7 +38,6 @@ function StudentClubs() {
     }
   };
 
-  // 📌 Join a club
   const handleJoin = async (clubId) => {
     try {
       const res = await fetch("http://localhost:8000/student/join-club", {
@@ -53,7 +50,7 @@ function StudentClubs() {
 
       if (res.ok) {
         alert("Joined successfully!");
-        fetchJoinedClubs(); // Refresh membership
+        fetchJoinedClubs();
       } else {
         const data = await res.json();
         alert(data.detail || "Error joining club");
@@ -81,24 +78,35 @@ function StudentClubs() {
       <Header />
       <div className="student-dashboard-wrapper">
         <div className="student-dashboard-card">
-          <h2>🎓 Available Clubs</h2>
-          <div className="student-tile-container">
-            {clubs.length === 0 ? (
-              <p>No clubs found.</p>
-            ) : (
-              clubs.map(club => (
-                <div className="tile" key={club.id}>
-                  <h3>{club.name}</h3>
-                  <p>{club.description}</p>
+          <h2 style={{ textAlign: "center" }}>🏛️ Explore Student Clubs</h2>
+
+          <div className="club-grid">
+            {clubs.map((club, index) => (
+              <div className="club-tile" key={club.id}>
+                <div className="club-header">
+                  <span className="club-icon">{['🤖', '🎯', '🧠', '🌱', '🎭'][index % 5]}</span>
+                  <h2>{club.name}</h2>
+                </div>
+
+                <p className="club-snippet">{club.description.slice(0, 100)}...</p>
+
+                <div className="club-actions">
+                  <button className="explore-btn" onClick={() => navigate(`/club/${club.id}`)}>
+                    🔍 Explore
+                  </button>
+
                   {joinedClubIds.includes(club.id) ? (
-                    <span className="joined-label">✅ Joined</span>
+                    <div className="club-status success">✅ Joined</div>
                   ) : (
-                    <button className="blue-btn" onClick={() => handleJoin(club.id)}>Join</button>
+                    <button className="join-glow-btn" onClick={() => handleJoin(club.id)}>
+                      Join Now
+                    </button>
                   )}
                 </div>
-              ))
-            )}
+              </div>
+            ))}
           </div>
+
         </div>
       </div>
       <Footer />

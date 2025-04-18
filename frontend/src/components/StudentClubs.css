@@ -1,0 +1,113 @@
+/* Grid Layout for Club Cards */
+.club-grid, .club-tile-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem 1rem;
+}
+
+/* Main Card Styling */
+.club-tile {
+  background: linear-gradient(to bottom right, #fefefe, #f2f6f9);
+  border-radius: 18px;
+  padding: 1.8rem 2rem;
+  width: 300px;
+  max-width: 100%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.club-tile:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to bottom right, #e9f8ff, #dceefb);
+}
+
+/* Club Header Section */
+.club-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.club-header h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.club-icon {
+  font-size: 1.6rem;
+}
+
+/* Club Description Text */
+.club-snippet {
+  font-size: 0.95rem;
+  color: #444;
+  margin-bottom: 1.4rem;
+  line-height: 1.5;
+}
+
+/* Button Section */
+.club-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Explore Button */
+.explore-btn {
+  padding: 8px 14px;
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.explore-btn:hover {
+  background: #e0e0e0;
+}
+
+/* Join Button */
+.join-glow-btn {
+  padding: 10px 16px;
+  background: linear-gradient(to right, #4facfe, #00f2fe);
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(79, 172, 254, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.join-glow-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(79, 172, 254, 0.5);
+}
+
+/* Joined Label */
+.club-status.success {
+  background-color: #e6f9ec;
+  color: #1e8e3e;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .club-grid, .club-tile-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+}
