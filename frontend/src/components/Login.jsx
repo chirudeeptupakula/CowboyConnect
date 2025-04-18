@@ -16,19 +16,31 @@ function Login() {
     return 'student';
   };
 
-  const handleLogin = () => {
-    const role = getRoleByUsername(username);
-    localStorage.setItem('userRole', role);
-    localStorage.setItem('username', username);
+  const handleLogin = async () => {
+    try {
+      const res = await fetch("http://localhost:8000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
 
-    if (role === 'admin') {
-      navigate('/admin-dashboard');
-    } else if (role === 'teacher') {
-      navigate('/teacher-dashboard');
-    } else {
-      navigate('/student-dashboard');
+      const data = await res.json();
+      if (res.ok) {
+        localStorage.setItem('userRole', data.role);
+        localStorage.setItem('username', data.username);
+
+        if (data.role === 'admin') navigate('/admin-dashboard');
+        else if (data.role === 'faculty') navigate('/teacher-dashboard');
+        else navigate('/student-dashboard');
+      } else {
+        alert("Login failed: " + data.detail);
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+      alert("Something went wrong!");
     }
   };
+
 
   return (
     <>
