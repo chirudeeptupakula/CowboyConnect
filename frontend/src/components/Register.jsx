@@ -108,12 +108,6 @@ function Register() {
             onChange={handleChange}
           />
 
-          {/* ✅ Optional: let user select role (student/faculty/admin) */}
-          <select name="role" value={form.role} onChange={handleChange}>
-            <option value="student">Student</option>
-            <option value="faculty">Faculty</option>
-            <option value="admin">Admin</option>
-          </select>
 
           <button className="blue-btn" onClick={handleRegister}>Register</button>
           <button className="blue-btn" onClick={() => navigate('/')}>Back to Login</button>
