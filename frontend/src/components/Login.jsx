@@ -26,9 +26,12 @@ function Login() {
 
       const data = await res.json();
       if (res.ok) {
+        // ✅ Store token and user info
+        localStorage.setItem('token', data.access_token);
         localStorage.setItem('userRole', data.role);
         localStorage.setItem('username', data.username);
 
+        // ✅ Navigate based on role
         if (data.role === 'admin') navigate('/admin-dashboard');
         else if (data.role === 'faculty') navigate('/teacher-dashboard');
         else navigate('/student-dashboard');
@@ -40,6 +43,7 @@ function Login() {
       alert("Something went wrong!");
     }
   };
+
 
 
   return (

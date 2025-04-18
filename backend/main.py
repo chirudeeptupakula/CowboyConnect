@@ -4,6 +4,7 @@ from backend.app import models
 from backend.app.database import engine
 from backend.app.routes import auth, student, faculty, admin
 
+
 # ✅ Optional debug print to confirm DB setup runs
 print("✅ Base metadata includes these tables:", models.Base.metadata.tables)
 
@@ -36,3 +37,6 @@ app.include_router(auth.router)
 app.include_router(student.router)
 app.include_router(faculty.router)
 app.include_router(admin.router)
+
+
+
