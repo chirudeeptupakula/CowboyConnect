@@ -1,12 +1,12 @@
 from passlib.context import CryptContext
-from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
-from sqlalchemy.orm import Session
-from backend.app.database import get_db
-from backend.app.models import User
 import os
 from dotenv import load_dotenv
+from fastapi import Request, HTTPException, Header, Depends
+from sqlalchemy.orm import Session
+from app.database import get_db
+from app.models import User
 
 # Load environment variables
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
@@ -49,3 +49,10 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
         raise HTTPException(status_code=404, detail="User not found")
 
     return user
+
+def get_user_from_header(x_username: str = Header(...), db: Session = Depends(get_db)) -> User:
+    user = db.query(User).filter(User.username == x_username).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+

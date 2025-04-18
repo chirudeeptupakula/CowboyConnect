@@ -1,18 +1,23 @@
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Enum
-from backend.app.database import Base
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum
 from datetime import datetime
-
-
-from .database import Base  # ✅ This is what defines Base
+from sqlalchemy import (
+    Column, Integer, String, DateTime, ForeignKey, Float, Enum as SqlEnum
+)
+from sqlalchemy.orm import relationship
+from app.database import Base
 import enum
 
+# -----------------------
+# 📌 Enum Definitions
+# -----------------------
 
 class UserRole(enum.Enum):
     student = "student"
     faculty = "faculty"
     admin = "admin"
+
+# -----------------------
+# 👤 User Table
+# -----------------------
 
 class User(Base):
     __tablename__ = 'users'
@@ -22,9 +27,13 @@ class User(Base):
     email = Column(String, unique=True, nullable=False)
     first_name = Column(String, nullable=False)
     last_name = Column(String, nullable=False)
-    password = Column(String, nullable=False)  # Store hashed
-    role = Column(Enum(UserRole), nullable=False)
+    password = Column(String, nullable=False)  # hashed
+    role = Column(SqlEnum(UserRole), nullable=False)
     department = Column(String, nullable=False)
+
+# -----------------------
+# 📘 Courses & Enrollment
+# -----------------------
 
 class Course(Base):
     __tablename__ = 'courses'
@@ -32,7 +41,7 @@ class Course(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False)
     description = Column(String)
-    created_by = Column(Integer, ForeignKey("users.id"))  # faculty user_id
+    created_by = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class StudentCourse(Base):
@@ -42,6 +51,10 @@ class StudentCourse(Base):
     student_id = Column(Integer, ForeignKey("users.id"))
     course_id = Column(Integer, ForeignKey("courses.id"))
     registered_at = Column(DateTime, default=datetime.utcnow)
+
+# -----------------------
+# 📅 Events & Participation
+# -----------------------
 
 class Event(Base):
     __tablename__ = 'events'
@@ -62,4 +75,35 @@ class EventParticipant(Base):
     student_id = Column(Integer, ForeignKey("users.id"))
     joined_at = Column(DateTime, default=datetime.utcnow)
 
+# -----------------------
+# 🏛️ Clubs & Membership
+# -----------------------
 
+class Club(Base):
+    __tablename__ = 'clubs'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    description = Column(String)
+
+class StudentClubMembership(Base):
+    __tablename__ = 'student_club_membership'
+
+    id = Column(Integer, primary_key=True)
+    student_id = Column(Integer, ForeignKey("users.id"))
+    club_id = Column(Integer, ForeignKey("clubs.id"))
+    joined_at = Column(DateTime, default=datetime.utcnow)
+
+# -----------------------
+# ⏱️ Timesheet
+# -----------------------
+
+class StudentTimesheet(Base):
+    __tablename__ = 'student_timesheet'
+
+    id = Column(Integer, primary_key=True)
+    student_id = Column(Integer, ForeignKey("users.id"))
+    club_id = Column(Integer, ForeignKey("clubs.id"))
+    date = Column(DateTime, default=datetime.utcnow)
+    hours = Column(Float, nullable=False)
+    description = Column(String)

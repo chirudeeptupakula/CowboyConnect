@@ -3,30 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import './TeacherDashboard.css';
+import { getAuthHeaders, checkAndHandleAuthError } from '../utils/auth';
 
 function MyCourses() {
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
 
   const fetchCourses = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
     try {
       const res = await fetch('http://localhost:8000/faculty/my-courses', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        headers: getAuthHeaders()
       });
-      if (!res.ok) {
-        if (res.status === 401) {
-          alert('Session expired. Please login again.');
-          handleLogout();
-          return;
-        }
-        const err = await res.json();
-        throw new Error(err.detail || 'Failed to fetch courses');
-      }
+
+      if (!checkAndHandleAuthError(res, navigate)) return;
 
       const data = await res.json();
       setCourses(data);
@@ -37,18 +26,16 @@ function MyCourses() {
   };
 
   const handleDelete = async (courseId) => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
     if (!window.confirm('Are you sure you want to delete this course?')) return;
 
     try {
       const res = await fetch(`http://localhost:8000/faculty/delete-course/${courseId}`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        headers: getAuthHeaders()
       });
+
+      if (!checkAndHandleAuthError(res, navigate)) return;
+
       if (res.ok) {
         alert('Course deleted!');
         fetchCourses();
@@ -61,14 +48,9 @@ function MyCourses() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate('/');
-  };
-
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
+    const username = localStorage.getItem('username');
+    if (!username) {
       alert('Unauthorized access. Please login.');
       navigate('/');
     } else {
@@ -88,7 +70,7 @@ function MyCourses() {
                 <div className="tile" key={course.id}>
                   <h3>{course.title}</h3>
                   <p>{course.description}</p>
-                  <button onClick={() => handleDelete(course.id)}>🗑 Delete</button>
+                  <button className="red-btn" onClick={() => handleDelete(course.id)}>🗑 Delete</button>
                 </div>
               ))
             ) : (

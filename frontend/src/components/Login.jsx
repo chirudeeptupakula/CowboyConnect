@@ -9,13 +9,6 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const getRoleByUsername = (username) => {
-    const uname = username.toLowerCase();
-    if (uname === 'admin1' || uname === 'admin2') return 'admin';
-    if (uname.startsWith('t_')) return 'teacher';
-    return 'student';
-  };
-
   const handleLogin = async () => {
     try {
       const res = await fetch("http://localhost:8000/auth/login", {
@@ -25,35 +18,32 @@ function Login() {
       });
 
       const data = await res.json();
-      if (res.ok) {
-        // ✅ Store token and user info
-        localStorage.setItem('token', data.access_token);
-        localStorage.setItem('userRole', data.role);
-        localStorage.setItem('username', data.username);
 
-        // ✅ Navigate based on role
+      if (res.ok) {
+        // ✅ Store session-like data
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("role", data.role);
+
+        // ✅ Navigate based on role from backend
         if (data.role === 'admin') navigate('/admin-dashboard');
         else if (data.role === 'faculty') navigate('/teacher-dashboard');
         else navigate('/student-dashboard');
       } else {
         alert("Login failed: " + data.detail);
       }
+
     } catch (error) {
       console.error("Login Error:", error);
       alert("Something went wrong!");
     }
   };
 
-
-
   return (
     <>
       <Header />
       <div
         className="login-page"
-        style={{
-          backgroundImage: `url('/Background_login.png')`, // from public folder
-        }}
+        style={{ backgroundImage: `url('/Background_login.png')` }}
       >
         <div className="login-container">
           <input
@@ -62,14 +52,12 @@ function Login() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-
           <button className="blue-btn" onClick={handleLogin}>Login</button>
           <button className="blue-btn" onClick={() => navigate('/register')}>Register</button>
           <button className="blue-btn" onClick={() => alert("Forgot Password coming soon!")}>Forgot Password?</button>

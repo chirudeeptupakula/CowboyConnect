@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.app import models
-from backend.app.database import engine
-from backend.app.routes import auth, student, faculty, admin
+from app import models
+from app.database import engine
+from app.routes import auth, student, faculty, admin
 
 
 # ✅ Optional debug print to confirm DB setup runs
