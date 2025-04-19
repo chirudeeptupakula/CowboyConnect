@@ -1,7 +1,6 @@
 /* ===============================
 📌 Dashboard Background & Layout
 =============================== */
-
 .dashboard-wrapper {
   display: flex;
   flex-direction: column;
@@ -21,10 +20,10 @@
   text-align: center;
 }
 
-.student-greeting {
-  font-size: 2rem;
+.welcome-text {
+  font-size: 2.2rem;
   font-weight: bold;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   color: #fff;
   text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7);
 }
@@ -33,7 +32,6 @@
 /* ===============================
 📌 Dashboard Tiles (Home Page)
 =============================== */
-
 .tile-grid, .tile-container {
   display: flex;
   justify-content: center;
@@ -42,23 +40,40 @@
 }
 
 .dashboard-tile, .tile {
-  background-color: #f7f8fa;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
   padding: 1.5rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  transition: transform 0.2s ease;
-  width: 220px;
+  width: 240px;
   text-align: center;
   cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .tile:hover, .dashboard-tile:hover {
-  transform: translateY(-5px);
-  background-color: #eef3ff;
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
 }
 
 .tile h3 {
-  margin-bottom: 0.5rem;
+  margin: 1rem 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+.tile p {
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Optional image inside tile */
+.tile-img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
 }
 
 /* Responsive Tile Size */
@@ -71,9 +86,8 @@
 
 
 /* ===============================
-📌 Club Grid + Tiles
+📌 Club Tiles & Status
 =============================== */
-
 .club-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -129,7 +143,6 @@
 /* ===============================
 📌 Club Tile Actions
 =============================== */
-
 .club-actions {
   display: flex;
   justify-content: center;
@@ -172,7 +185,6 @@
 /* ===============================
 📌 Club Status Badge
 =============================== */
-
 .club-status.success, .joined-label {
   background: #e0fbe6;
   color: #1e8e3e;
@@ -182,25 +194,10 @@
   font-size: 0.9rem;
   text-align: center;
 }
-
-
-/* ===============================
-📌 Optional Glass Effect (unused)
-=============================== */
-
-.club-card-glass {
-  width: 260px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  padding: 1.5rem;
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.club-card-glass:hover {
-  transform: scale(1.03);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+/* 📌 For displaying full image in tile */
+.tile-img-full {
+  width: 100%;
+  max-height: 180px;
+  object-fit: contain;     /* 👈 Ensures full image fits without cropping */
+  margin-bottom: 1rem;
 }
