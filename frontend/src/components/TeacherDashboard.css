@@ -1,19 +1,17 @@
-/* ✅ File: frontend/src/components/TeacherDashboard.css */
-
 .teacher-dashboard-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f7f9fc;
   min-height: 80vh;
   padding: 2rem;
 }
 
+/* ✨ Semi-transparent card */
 .teacher-dashboard-card {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.85); /* Transparent white */
   padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 700px;
   text-align: center;
@@ -30,7 +28,7 @@
 
 .tile {
   width: 260px;
-  background-color: #f3f4f6;
+  background-color: rgba(243, 244, 246, 0.9); /* Slight transparency */
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -51,6 +49,7 @@
   color: #555;
 }
 
+/* 🔴 Optional input styles for error forms */
 .input-error {
   border: 2px solid #ff4d4d;
   outline: none;
@@ -99,6 +98,7 @@ button.blue-btn:hover {
   background-color: #e65c00;
 }
 
+/* 🖥 Responsive layout */
 @media screen and (max-width: 600px) {
   .teacher-tile-container {
     flex-direction: column;
@@ -109,4 +109,24 @@ button.blue-btn:hover {
     width: 100%;
     max-width: 300px;
   }
+}
+
+/* ✅ Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  font-size: 1.1rem;
+  text-align: center;
 }

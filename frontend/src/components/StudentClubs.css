@@ -111,3 +111,15 @@
     align-items: center;
   }
 }
+/* Make entire tile clickable */
+.club-tile.clickable {
+  cursor: pointer;
+}
+
+/* Add hover effect for clickable tile */
+.club-tile.clickable:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to bottom right, #e9f8ff, #dceefb);
+}
+

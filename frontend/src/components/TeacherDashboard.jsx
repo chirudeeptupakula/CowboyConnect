@@ -1,5 +1,4 @@
-// ✅ File: frontend/src/components/TeacherDashboard.jsx
-
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
@@ -7,13 +6,16 @@ import './TeacherDashboard.css';
 
 function TeacherDashboard() {
   const navigate = useNavigate();
+  const [modalMessage, setModalMessage] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <>
       <Header />
+
       <div className="teacher-dashboard-wrapper">
         <div className="teacher-dashboard-card">
-          <h2>Welcome Faculty 👩‍🏫</h2>
+          <h2 style={{ textAlign: "center", marginBottom: "1rem" }}>Welcome Faculty 👩‍🏫</h2>
           <div className="teacher-tile-container">
             <div className="tile" onClick={() => navigate('/teacher/my-courses')}>
               <h3>📘 My Courses</h3>
@@ -30,6 +32,16 @@ function TeacherDashboard() {
           </div>
         </div>
       </div>
+
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-box">
+            <p>{modalMessage}</p>
+            <button className="blue-btn" onClick={() => setShowModal(false)}>Close</button>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </>
   );

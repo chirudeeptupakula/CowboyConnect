@@ -12,7 +12,7 @@
   z-index: 0;
 }
 
-/* 🔥 Background image fades from visible to subtle */
+/* ✅ Background image with subtle fade */
 .register-page::before {
   content: '';
   position: absolute;
@@ -20,7 +20,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('/public/Background_register.png') center/cover no-repeat;
+  background: url('/Public/Background_register.png') center/cover no-repeat;
   opacity: 1;
   animation: fadeOutBackground 2s ease-in-out forwards;
   z-index: -1;
@@ -28,7 +28,7 @@
 
 @keyframes fadeOutBackground {
   from { opacity: 1; }
-  to { opacity: 0.4; } /* soft watermark */
+  to { opacity: 0.4; }
 }
 
 .register-container {
@@ -49,7 +49,9 @@
   color: #333;
 }
 
-.register-container input {
+/* ✅ Input Fields */
+.register-container input,
+.register-container select {
   width: 100%;
   margin-bottom: 1rem;
   padding: 0.75rem 1rem;
@@ -57,18 +59,27 @@
   border: 1px solid #ccc;
   border-radius: 25px;
   outline: none;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.register-container input:focus {
+.register-container input:focus,
+.register-container select:focus {
   border-color: #3a86ff;
   box-shadow: 0 0 5px rgba(58, 134, 255, 0.3);
 }
 
+.register-container select {
+  appearance: none;
+  background-color: #fff;
+  color: #333;
+}
+
+/* ✅ Buttons */
 .blue-btn {
   width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
+  background-color: #3a86ff !important;
   color: white;
   border: none;
   border-radius: 25px;
@@ -86,9 +97,8 @@
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.blue-btn {
-  background-color: #3a86ff !important;
-}
+
+/* ✅ Modal Styles */
 .modal-overlay {
   position: fixed;
   top: 0;

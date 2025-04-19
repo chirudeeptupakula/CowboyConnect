@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
-import './TeacherDashboard.css';
+import './AddCourseEvent.css';
 import { getAuthHeaders, checkAndHandleAuthError } from '../utils/auth';
 
 function AddCourseEvent() {
@@ -14,9 +14,9 @@ function AddCourseEvent() {
     date: ''
   });
   const [errors, setErrors] = useState({});
+  const [modalMessage, setModalMessage] = useState('');
   const navigate = useNavigate();
 
-  // ✅ Redirect if not logged in as faculty
   useEffect(() => {
     const username = localStorage.getItem('username');
     const role = localStorage.getItem('role');
@@ -61,47 +61,35 @@ function AddCourseEvent() {
         body: JSON.stringify(payload)
       });
 
-      if (!checkAndHandleAuthError(res, navigate)) return;
-
       const data = await res.json();
       if (res.ok) {
-        alert(`${mode === 'course' ? 'Course' : 'Event'} created successfully!`);
+        setModalMessage(`${mode === 'course' ? 'Course' : 'Event'} created successfully!`);
         setForm({ title: '', description: '', location: '', date: '' });
       } else {
-        alert('Error: ' + (data.detail || 'Something went wrong.'));
+        setModalMessage(data.detail || 'Something went wrong.');
       }
     } catch (error) {
       console.error("Submission error:", error);
-      alert('Something went wrong.');
+      setModalMessage('Something went wrong.');
     }
   };
 
   return (
     <>
       <Header />
-      <div className="teacher-dashboard-wrapper">
-        <div className="teacher-dashboard-card">
-          <h2>➕ Add Course or Event</h2>
+      <div className="add-wrapper">
+        <div className="add-card">
+          <h2>➕ Add {mode === 'course' ? 'Course' : 'Event'}</h2>
 
-          <div style={{ marginBottom: '1rem' }}>
-            <button
-              className={mode === 'course' ? 'blue-btn' : ''}
-              onClick={() => setMode('course')}
-            >
-              Course
-            </button>
-            <button
-              className={mode === 'event' ? 'blue-btn' : ''}
-              onClick={() => setMode('event')}
-            >
-              Event
-            </button>
+          <div className="toggle-buttons">
+            <button className={mode === 'course' ? 'active' : ''} onClick={() => setMode('course')}>Course</button>
+            <button className={mode === 'event' ? 'active' : ''} onClick={() => setMode('event')}>Event</button>
           </div>
 
           <input
             type="text"
             name="title"
-            placeholder="Title"
+            placeholder="Enter title"
             className={errors.title ? 'input-error' : ''}
             value={form.title}
             onChange={handleChange}
@@ -110,7 +98,7 @@ function AddCourseEvent() {
 
           <textarea
             name="description"
-            placeholder="Description"
+            placeholder="Enter description"
             className={errors.description ? 'input-error' : ''}
             value={form.description}
             onChange={handleChange}
@@ -140,11 +128,16 @@ function AddCourseEvent() {
             </>
           )}
 
-          <button className="blue-btn" onClick={handleSubmit}>
-            Submit
-          </button>
+          <button className="blue-btn" onClick={handleSubmit}>Submit</button>
         </div>
       </div>
+
+      {modalMessage && (
+        <div className="modal-overlay" onClick={() => setModalMessage('')}>
+          <div className="modal-box">{modalMessage}</div>
+        </div>
+      )}
+
       <Footer />
     </>
   );
