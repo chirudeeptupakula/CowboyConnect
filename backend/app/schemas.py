@@ -1,6 +1,7 @@
 from pydantic import BaseModel, EmailStr
 from enum import Enum
 from datetime import datetime
+from typing import Optional
 
 
 class UserRole(str, Enum):
@@ -74,5 +75,22 @@ class TimesheetOut(BaseModel):
     date: datetime
     hours: float
     description: str
+    class Config:
+        orm_mode = True
+
+class CourseCreate(BaseModel):
+    course_name: str
+    course_code: str
+    description: Optional[str] = None
+
+from pydantic import BaseModel
+from typing import Optional
+
+class CourseOut(BaseModel):
+    id: int
+    title: str
+    description: Optional[str]
+    created_by: int
+
     class Config:
         orm_mode = True

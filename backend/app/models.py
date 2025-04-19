@@ -31,6 +31,13 @@ class User(Base):
     role = Column(SqlEnum(UserRole), nullable=False)
     department = Column(String, nullable=False)
 
+    # Relationships
+    created_courses = relationship("Course", back_populates="faculty", cascade="all, delete")
+    registered_courses = relationship("CourseRegistration", back_populates="student", cascade="all, delete")
+    joined_events = relationship("EventParticipant", back_populates="student", cascade="all, delete")
+    club_memberships = relationship("StudentClubMembership", back_populates="student", cascade="all, delete")
+    timesheets = relationship("StudentTimesheet", back_populates="student", cascade="all, delete")
+
 # -----------------------
 # 📘 Courses & Enrollment
 # -----------------------
@@ -44,13 +51,21 @@ class Course(Base):
     created_by = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
 
-class StudentCourse(Base):
-    __tablename__ = 'student_courses'
+    # Relationships
+    faculty = relationship("User", back_populates="created_courses")
+    registrations = relationship("CourseRegistration", back_populates="course", cascade="all, delete")
+
+class CourseRegistration(Base):
+    __tablename__ = 'course_registrations'
 
     id = Column(Integer, primary_key=True)
     student_id = Column(Integer, ForeignKey("users.id"))
     course_id = Column(Integer, ForeignKey("courses.id"))
     registered_at = Column(DateTime, default=datetime.utcnow)
+
+    # Relationships
+    student = relationship("User", back_populates="registered_courses")
+    course = relationship("Course", back_populates="registrations")
 
 # -----------------------
 # 📅 Events & Participation
@@ -75,6 +90,8 @@ class EventParticipant(Base):
     student_id = Column(Integer, ForeignKey("users.id"))
     joined_at = Column(DateTime, default=datetime.utcnow)
 
+    student = relationship("User", back_populates="joined_events")
+
 # -----------------------
 # 🏛️ Clubs & Membership
 # -----------------------
@@ -94,6 +111,8 @@ class StudentClubMembership(Base):
     club_id = Column(Integer, ForeignKey("clubs.id"))
     joined_at = Column(DateTime, default=datetime.utcnow)
 
+    student = relationship("User", back_populates="club_memberships")
+
 # -----------------------
 # ⏱️ Timesheet
 # -----------------------
@@ -107,3 +126,5 @@ class StudentTimesheet(Base):
     date = Column(DateTime, default=datetime.utcnow)
     hours = Column(Float, nullable=False)
     description = Column(String)
+
+    student = relationship("User", back_populates="timesheets")
