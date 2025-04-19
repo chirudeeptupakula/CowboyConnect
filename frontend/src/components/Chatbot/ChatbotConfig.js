@@ -1,6 +1,16 @@
+import { createChatBotMessage } from 'react-chatbot-kit';
+import ActionProvider from './ActionProvider';
+import MessageParser from './MessageParser';
+
 const config = {
-  initialMessages: [{ type: "text", id: 1, message: "Hi! I'm CowboyConnect Assistant. How can I help you today?" }],
+  initialMessages: [
+    createChatBotMessage("Welcome to CowboyBot! How can I help you?")
+  ],
   botName: "CowboyBot",
+  customComponents: {},
+  state: {},
+  actionProvider: ActionProvider,
+  messageParser: MessageParser,
 };
 
 export default config;

@@ -1,4 +1,3 @@
-// ✅ Returns headers including X-Username and optional Authorization token
 export function getAuthHeaders() {
   const username = localStorage.getItem('username');
   const token = localStorage.getItem('token');
@@ -7,16 +6,12 @@ export function getAuthHeaders() {
     'Content-Type': 'application/json',
   };
 
-  if (username) {
-    headers['X-Username'] = username;
-  }
-
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
+  if (username) headers['X-Username'] = username;  // ✅ REQUIRED
+  if (token) headers['Authorization'] = `Bearer ${token}`;  // optional
 
   return headers;
 }
+
 
 // ✅ Handles 401 or 403 errors and redirects to login
 export function checkAndHandleAuthError(res, navigate) {

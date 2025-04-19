@@ -8,6 +8,7 @@ import StudentCourseCatalog from './components/StudentCourseCatalog';
 import StudentMyCourses from './components/StudentMyCourses';
 import StudentClubs from './components/StudentClubs';
 import ClubDetails from './components/ClubDetails';
+import StudentEventCatalog from './components/StudentEventCatalog'; // ✅ ADD THIS
 
 import TeacherDashboard from './components/TeacherDashboard';
 import MyCourses from './components/MyCourses';
@@ -29,6 +30,7 @@ function App() {
           <Route path="/student-dashboard" element={<StudentDashboard />} />
           <Route path="/student/my-courses" element={<StudentMyCourses />} />
           <Route path="/courses" element={<StudentCourseCatalog />} />
+          <Route path="/student/events" element={<StudentEventCatalog />} /> {/* ✅ NEW */}
           <Route path="/student-clubs" element={<StudentClubs />} />
           <Route path="/club/:id" element={<ClubDetails />} />
 

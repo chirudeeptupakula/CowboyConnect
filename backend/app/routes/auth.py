@@ -1,22 +1,23 @@
-# ✅ File: backend/app/routes/auth.py
-
-from fastapi import APIRouter, Depends, HTTPException, Body
+from fastapi import APIRouter, Depends, HTTPException, Body, Request
 from sqlalchemy.orm import Session
 from app import models, schemas
 from app.database import get_db
 from app.utils import hash_password, verify_password
-from fastapi.security import OAuth2PasswordBearer
-
-from jose import jwt
-import os
-from datetime import datetime, timedelta
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-# Secret and algorithm for JWT
-SECRET_KEY = os.getenv("SECRET_KEY", "supersecretkey")
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+# ✅ Replacement for token-based auth
+def get_current_user(request: Request, db: Session = Depends(get_db)):
+    username = request.headers.get("X-Username")
+
+    if not username:
+        raise HTTPException(status_code=401, detail="Missing X-Username header")
+
+    user = db.query(models.User).filter(models.User.username == username).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    return user
 
 # ✅ Registration Route
 @router.post("/register")
@@ -39,28 +40,9 @@ def login_user(data: dict = Body(...), db: Session = Depends(get_db)):
     if not user or not verify_password(password, user.password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
-    payload = {
-        "sub": str(user.id),
-        "username": user.username,
-        "role": user.role.value,  # ✅ .value gets "student", "faculty", or "admin"
-        "exp": datetime.utcnow() + timedelta(minutes=60)
-    }
-
-    token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
-
+    # ✅ No token, just send identity info to store in localStorage
     return {
-        "access_token": token,
-        "token_type": "bearer",
         "username": user.username,
-        "role": user.role.value  # ✅ convert enum to string
+        "role": user.role.value,  # convert enum to "student", "faculty", etc.
+        "department": user.department
     }
-
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    # Simulated authentication logic
-    user = db.query(models.User).filter_by(id=1).first()  # Replace with real logic
-    if not user:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-    return user

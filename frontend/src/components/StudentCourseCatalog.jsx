@@ -49,16 +49,17 @@ function StudentCourseCatalog() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
     const role = localStorage.getItem("userRole");
 
-    if (!token || role !== "student") {
+    if (!username || role !== "student") {
       alert("Unauthorized access. Please login as student.");
       navigate('/');
     } else {
       fetchCourses();
     }
   }, [navigate]);
+
 
   return (
     <>

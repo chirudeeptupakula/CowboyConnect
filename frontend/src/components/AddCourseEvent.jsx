@@ -19,7 +19,7 @@ function AddCourseEvent() {
 
   useEffect(() => {
     const username = localStorage.getItem('username');
-    const role = localStorage.getItem('role');
+    const role = localStorage.getItem('userRole');
     if (!username || role !== 'faculty') {
       alert("You must be logged in as faculty.");
       localStorage.clear();

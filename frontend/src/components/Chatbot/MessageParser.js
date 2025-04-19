@@ -4,7 +4,8 @@ class MessageParser {
   }
 
   parse(message) {
-    this.actionProvider.handleUserMessage(message);
+    console.log("User typed:", message);
+    this.actionProvider.handleDefault();
   }
 }
 

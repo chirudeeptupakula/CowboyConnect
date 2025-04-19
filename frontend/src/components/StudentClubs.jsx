@@ -40,9 +40,11 @@ function StudentClubs() {
 
   useEffect(() => {
     const username = localStorage.getItem("username");
-    const role = localStorage.getItem("role");
+    const role = localStorage.getItem("userRole");
+    console.log(username);
     if (!username || role !== "student") {
       alert("Unauthorized access.");
+
       navigate('/');
     } else {
       fetchClubs();
