@@ -5,6 +5,8 @@ from sqlalchemy.orm import Session
 from app import models, schemas
 from app.database import get_db
 from app.utils import hash_password, verify_password
+from fastapi.security import OAuth2PasswordBearer
+
 from jose import jwt
 import os
 from datetime import datetime, timedelta
@@ -53,3 +55,12 @@ def login_user(data: dict = Body(...), db: Session = Depends(get_db)):
         "role": user.role.value  # ✅ convert enum to string
     }
 
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    # Simulated authentication logic
+    user = db.query(models.User).filter_by(id=1).first()  # Replace with real logic
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    return user
