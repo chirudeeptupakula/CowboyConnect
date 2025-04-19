@@ -7,12 +7,13 @@ import { getAuthHeaders, checkAndHandleAuthError } from '../utils/auth';
 
 function StudentCourseCatalog() {
   const [courses, setCourses] = useState([]);
+  const [registered, setRegistered] = useState([]);
   const navigate = useNavigate();
 
   const fetchCourses = async () => {
     try {
-      const res = await fetch('http://localhost:8000/student/courses', {
-        headers: getAuthHeaders()
+      const res = await fetch('http://localhost:8000/courses/available', {
+        headers: getAuthHeaders(),
       });
 
       if (!checkAndHandleAuthError(res, navigate)) return;
@@ -27,9 +28,9 @@ function StudentCourseCatalog() {
 
   const handleRegister = async (courseId) => {
     try {
-      const res = await fetch(`http://localhost:8000/student/register-course/${courseId}`, {
+      const res = await fetch(`http://localhost:8000/courses/register/${courseId}`, {
         method: 'POST',
-        headers: getAuthHeaders()
+        headers: getAuthHeaders(),
       });
 
       if (!checkAndHandleAuthError(res, navigate)) return;
@@ -37,6 +38,7 @@ function StudentCourseCatalog() {
       const data = await res.json();
       if (res.ok) {
         alert('✅ Successfully registered!');
+        setRegistered([...registered, courseId]);
       } else {
         alert('⚠️ ' + (data.detail || 'Registration failed'));
       }
@@ -69,7 +71,12 @@ function StudentCourseCatalog() {
               <div key={course.id} className="course-card">
                 <h3>{course.title}</h3>
                 <p>{course.description}</p>
-                <button onClick={() => handleRegister(course.id)}>Register</button>
+                <button
+                  disabled={registered.includes(course.id)}
+                  onClick={() => handleRegister(course.id)}
+                >
+                  {registered.includes(course.id) ? '✅ Registered' : 'Register'}
+                </button>
               </div>
             ))
           ) : (

@@ -22,7 +22,7 @@ function Login() {
       if (res.ok) {
         // ✅ Store session-like data
         localStorage.setItem("username", data.username);
-        localStorage.setItem("role", data.role);
+        localStorage.setItem("userRole", data.role);
 
         // ✅ Navigate based on role from backend
         if (data.role === 'admin') navigate('/admin-dashboard');

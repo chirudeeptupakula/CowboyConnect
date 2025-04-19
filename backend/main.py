@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app import models
 from app.database import engine
-from app.routes import auth, student, faculty, admin
+from app.routes import auth, student, faculty, admin, course_routes, event_routes
 
 
 # ✅ Optional debug print to confirm DB setup runs
@@ -37,6 +37,10 @@ app.include_router(auth.router)
 app.include_router(student.router)
 app.include_router(faculty.router)
 app.include_router(admin.router)
+app.include_router(course_routes.router)
+app.include_router(event_routes.router)
+
+
 
 
 

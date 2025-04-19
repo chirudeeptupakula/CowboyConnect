@@ -2,12 +2,18 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 
+
 // 🎓 Student Components
 import StudentDashboard from './components/StudentDashboard';
 import StudentCourseCatalog from './components/StudentCourseCatalog';
 import StudentMyCourses from './components/StudentMyCourses';
 import StudentClubs from './components/StudentClubs';
 import ClubDetails from './components/ClubDetails'; // ✅ New component for /club/:id
+import StudentEventCatalog from './components/StudentEventCatalog';
+import StudentMyEvents from './components/StudentMyEvents';
+
+
+
 
 // 👨‍🏫 Faculty/Teacher Components
 import TeacherDashboard from './components/TeacherDashboard';
@@ -31,6 +37,14 @@ function App() {
         <Route path="/courses" element={<StudentCourseCatalog />} />
         <Route path="/student-clubs" element={<StudentClubs />} />
         <Route path="/club/:id" element={<ClubDetails />} /> {/* ✅ View specific club */}
+        <Route path="/student/courses" element={<StudentCourseCatalog />} />
+        <Route path="/student/events" element={<StudentEventCatalog />} />
+        <Route path="/student/my-events" element={<StudentMyEvents />} />
+        <Route path="/student/events" element={<StudentEventCatalog />} />
+
+
+
+
 
         {/* 👨‍🏫 Teacher Routes */}
         <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
