@@ -30,7 +30,7 @@ function App() {
           <Route path="/student-dashboard" element={<StudentDashboard />} />
           <Route path="/student/my-courses" element={<StudentMyCourses />} />
           <Route path="/courses" element={<StudentCourseCatalog />} />
-          <Route path="/student/events" element={<StudentEventCatalog />} /> {/* ✅ NEW */}
+          <Route path="/student/events" element={<StudentEventCatalog />} />
           <Route path="/student-clubs" element={<StudentClubs />} />
           <Route path="/club/:id" element={<ClubDetails />} />
 

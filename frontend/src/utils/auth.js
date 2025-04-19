@@ -1,16 +1,14 @@
 export function getAuthHeaders() {
-  const username = localStorage.getItem('username');
-  const token = localStorage.getItem('token');
-
+  const username = localStorage.getItem("username");
   const headers = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   };
 
-  if (username) headers['X-Username'] = username;  // ✅ REQUIRED
-  if (token) headers['Authorization'] = `Bearer ${token}`;  // optional
+  if (username) headers["X-Username"] = username;
 
   return headers;
 }
+
 
 
 // ✅ Handles 401 or 403 errors and redirects to login

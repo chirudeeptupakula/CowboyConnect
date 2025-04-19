@@ -2,16 +2,15 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
-//import './StudentEventCatalog.css';
+import './StudentCourseCatalog.css'; // Reused styles for event cards
 import { getAuthHeaders, checkAndHandleAuthError } from '../utils/auth';
-import './StudentCourseCatalog.css';
-
 
 function StudentEventCatalog() {
   const [events, setEvents] = useState([]);
   const [joinedEvents, setJoinedEvents] = useState([]);
   const navigate = useNavigate();
 
+  // ✅ Load all available events
   const fetchEvents = async () => {
     try {
       const res = await fetch('http://localhost:8000/events/available', {
@@ -19,13 +18,16 @@ function StudentEventCatalog() {
       });
 
       if (!checkAndHandleAuthError(res, navigate)) return;
+
       const data = await res.json();
       setEvents(data);
     } catch (error) {
+      console.error("Failed to fetch events:", error);
       alert("Failed to load events.");
     }
   };
 
+  // ✅ Join an event
   const handleJoin = async (eventId) => {
     try {
       const res = await fetch(`http://localhost:8000/events/register/${eventId}`, {
@@ -34,21 +36,25 @@ function StudentEventCatalog() {
       });
 
       if (!checkAndHandleAuthError(res, navigate)) return;
+
       const data = await res.json();
       if (res.ok) {
-        alert(data.message);
+        alert(data.message || "Successfully joined!");
         setJoinedEvents([...joinedEvents, eventId]);
       } else {
         alert(data.detail || "Registration failed.");
       }
     } catch (err) {
+      console.error("Join error:", err);
       alert("Something went wrong.");
     }
   };
 
   useEffect(() => {
+    const username = localStorage.getItem("username");
     const role = localStorage.getItem("userRole");
-    if (role !== "student") {
+
+    if (!username || role !== "student") {
       alert("Unauthorized access. Please login as student.");
       navigate('/');
     } else {
