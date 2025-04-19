@@ -1,0 +1,127 @@
+.club-details-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2rem;
+  background: transparent;
+  min-height: 80vh;
+  gap: 1.5rem;
+}
+
+.club-image {
+  flex: 1;
+  max-width: 50%;
+  padding: 1rem;
+}
+
+.club-image img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ✅ Only one clean .club-info definition */
+.club-info {
+  flex: 1;
+  padding: 1rem 2rem;
+  background-color: rgba(255, 255, 255, 0.7); /* ✨ semi-transparent */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(6px); /* optional frosted glass effect */
+}
+
+.club-info h2 {
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+  color: #222;
+}
+
+.club-info h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+  color: #333;
+}
+
+.club-description {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.event-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1rem;
+}
+
+.event-list li {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.5); /* ✨ transparent background */
+  transition: box-shadow 0.2s ease;
+}
+
+.event-list li:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* 🔘 Buttons */
+.register-btn,
+.volunteer-btn,
+.join-club-btn {
+  margin-top: 0.8rem;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.register-btn {
+  background: #3a86ff;
+  color: white;
+}
+
+.register-btn:hover {
+  background: #266bdc;
+  transform: scale(1.03);
+}
+
+.volunteer-btn {
+  background: #fe5c00;
+  color: white;
+}
+
+.volunteer-btn:hover {
+  background: #d94b00;
+  transform: scale(1.03);
+}
+
+.join-club-btn {
+  background: #00b894;
+  color: white;
+  margin: 1rem 0;
+}
+
+.join-club-btn:hover {
+  background: #009977;
+  transform: scale(1.03);
+}
+
+@media (max-width: 768px) {
+  .club-details-container {
+    flex-direction: column;
+  }
+
+  .club-image,
+  .club-info {
+    max-width: 100%;
+    padding: 1rem;
+  }
+}

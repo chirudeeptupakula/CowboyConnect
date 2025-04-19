@@ -1,0 +1,102 @@
+.add-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+  min-height: 80vh;
+}
+
+.add-card {
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+}
+
+.add-card h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.toggle-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+  gap: 1rem;
+}
+
+.toggle-buttons button {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.toggle-buttons button.active {
+  background-color: #fe5c00;
+  color: white;
+}
+
+input, textarea {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.input-error {
+  border-color: #ff4d4d;
+}
+
+.error-text {
+  color: #ff4d4d;
+  font-size: 0.9rem;
+  margin: -0.5rem 0 1rem;
+}
+
+.blue-btn {
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.2rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.blue-btn:hover {
+  background-color: #005fa3;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}

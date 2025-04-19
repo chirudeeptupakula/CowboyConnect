@@ -7,6 +7,8 @@ import './Login.css';
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [modalMessage, setModalMessage] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -20,21 +22,21 @@ function Login() {
       const data = await res.json();
 
       if (res.ok) {
-        // ✅ Store session-like data
         localStorage.setItem("username", data.username);
         localStorage.setItem("role", data.role);
 
-        // ✅ Navigate based on role from backend
         if (data.role === 'admin') navigate('/admin-dashboard');
         else if (data.role === 'faculty') navigate('/teacher-dashboard');
         else navigate('/student-dashboard');
       } else {
-        alert("Login failed: " + data.detail);
+        setModalMessage("❌ Login failed: " + (data.detail || "Invalid credentials"));
+        setShowModal(true);
       }
 
     } catch (error) {
       console.error("Login Error:", error);
-      alert("Something went wrong!");
+      setModalMessage("❌ Something went wrong. Please try again later.");
+      setShowModal(true);
     }
   };
 
@@ -61,6 +63,16 @@ function Login() {
           <button className="blue-btn" onClick={() => alert("Forgot Password coming soon!")}>Forgot Password?</button>
         </div>
       </div>
+
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-box">
+            <p>{modalMessage}</p>
+            <button onClick={() => setShowModal(false)} className="blue-btn">Close</button>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </>
   );

@@ -34,8 +34,11 @@
   padding: 0.4rem 1.2rem;
   border-radius: 25px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  max-width: fit-content; /* ✅ restrict width */
+  display: inline-block;
+  white-space: nowrap;
 }
+
 
 .user-pill:hover {
   background-color: #006666;

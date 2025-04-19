@@ -15,7 +15,7 @@ function Register() {
     department: '',
     username: '',
     password: '',
-    role: 'student'
+    role: ''
   });
 
   const [showModal, setShowModal] = useState(false);
@@ -66,26 +66,81 @@ function Register() {
       <div className="register-page">
         <div className="register-container">
           <h2>Create Account</h2>
-          <input type="text" name="firstName" placeholder="First Name" value={form.firstName} onChange={handleChange} />
-          <input type="text" name="lastName" placeholder="Last Name" value={form.lastName} onChange={handleChange} />
-          <input type="tel" name="phone" placeholder="Phone Number" value={form.phone} onChange={handleChange} />
-          <input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} />
-          <input type="text" name="department" placeholder="Department" value={form.department} onChange={handleChange} />
-          <input type="text" name="username" placeholder="Username" value={form.username} onChange={handleChange} />
-          <input type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange} />
+          <input
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            value={form.firstName}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            value={form.lastName}
+            onChange={handleChange}
+          />
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Phone Number"
+            value={form.phone}
+            onChange={handleChange}
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="department"
+            placeholder="Department"
+            value={form.department}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={form.username}
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+          />
+
+          <select
+            name="role"
+            value={form.role}
+            onChange={handleChange}
+            style={{ color: form.role === '' ? '#999' : '#000' }}
+          >
+            <option value="" disabled hidden>Select Role</option>
+            <option value="student">Student</option>
+            <option value="faculty">Faculty</option>
+            <option value="admin">Admin</option>
+          </select>
+
           <button className="blue-btn" onClick={handleRegister}>Register</button>
           <button className="blue-btn" onClick={() => navigate('/')}>Back to Login</button>
         </div>
-      </div>
 
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal-box">
-            <p>{modalMessage}</p>
+        {/* ✅ Modal */}
+        {showModal && (
+          <div className="modal-overlay">
+            <div className="modal-box">
+              {modalMessage}
+            </div>
           </div>
-        </div>
-      )}
-
+        )}
+      </div>
       <Footer />
     </>
   );
