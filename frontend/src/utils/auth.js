@@ -1,13 +1,24 @@
-// ✅ Returns headers with X-Username from localStorage
+// ✅ Returns headers including X-Username and optional Authorization token
 export function getAuthHeaders() {
   const username = localStorage.getItem('username');
-  return {
+  const token = localStorage.getItem('token');
+
+  const headers = {
     'Content-Type': 'application/json',
-    'X-Username': username
   };
+
+  if (username) {
+    headers['X-Username'] = username;
+  }
+
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  return headers;
 }
 
-// ✅ Checks if request is unauthorized and redirects to login
+// ✅ Handles 401 or 403 errors and redirects to login
 export function checkAndHandleAuthError(res, navigate) {
   if (res.status === 401 || res.status === 403) {
     alert("Session expired or unauthorized. Please log in again.");
