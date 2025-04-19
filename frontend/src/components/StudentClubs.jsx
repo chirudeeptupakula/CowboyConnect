@@ -55,13 +55,11 @@ function StudentClubs() {
       <Header />
       <div className="student-dashboard-wrapper">
         <div className="student-dashboard-card">
-          <h2 style={{ textAlign: "center", margin: "3rem 0 1rem 0" }}>🏛️ Explore Student Clubs</h2>
-
-
+          <h2 className="welcome-text">🏛️ Explore Student Clubs</h2>
           <div className="club-grid">
             {clubs.map((club, index) => (
               <div
-                className="club-tile clickable"
+                className="club-tile clickable glow-tile"
                 key={club.id}
                 onClick={() => navigate(`/club/${club.id}`)}
               >
