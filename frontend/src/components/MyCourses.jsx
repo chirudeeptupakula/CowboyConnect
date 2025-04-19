@@ -50,13 +50,16 @@ function MyCourses() {
 
   useEffect(() => {
     const username = localStorage.getItem('username');
-    if (!username) {
-      alert('Unauthorized access. Please login.');
+    const role = localStorage.getItem('userRole');
+
+    if (!username || role !== 'faculty') {
+      alert('Unauthorized access. Please login as faculty.');
       navigate('/');
     } else {
       fetchCourses();
     }
   }, [navigate]);
+
 
   return (
     <>

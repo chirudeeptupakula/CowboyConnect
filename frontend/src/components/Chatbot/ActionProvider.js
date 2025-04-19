@@ -4,21 +4,13 @@ class ActionProvider {
     this.setState = setStateFunc;
   }
 
-  async handleUserMessage(message) {
-    const response = await fetch('http://localhost:8000/chatbot', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message }),
-    });
-
-    const data = await response.json();
-    const botMessage = this.createChatBotMessage(data.reply || "Sorry, I couldn't process that.");
-
-    this.setState(prev => ({
+  handleDefault = () => {
+    const message = this.createChatBotMessage("Hi there! How can I assist you?");
+    this.setState((prev) => ({
       ...prev,
-      messages: [...prev.messages, botMessage],
+      messages: [...prev.messages, message],
     }));
-  }
+  };
 }
 
 export default ActionProvider;
