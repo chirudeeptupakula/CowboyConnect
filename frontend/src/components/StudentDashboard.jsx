@@ -2,6 +2,14 @@ import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import './StudentDashboard.css';
+import ChatWidget from './Chatbot/ChatWidget';
+
+import { Chatbot } from 'react-chatbot-kit';
+import 'react-chatbot-kit/build/main.css';
+
+import config from './Chatbot/ChatbotConfig';
+import MessageParser from './Chatbot/MessageParser';
+import ActionProvider from './Chatbot/ActionProvider';
 
 function StudentDashboard() {
   const navigate = useNavigate();
@@ -26,10 +34,15 @@ function StudentDashboard() {
               <h3>🏛️ Clubs</h3>
               <p>Browse and join student clubs</p>
             </div>
-
           </div>
         </div>
       </div>
+
+      {/* ✅ Floating Chatbot Widget */}
+      <div style={{ position: 'fixed', bottom: '90px', right: '20px', zIndex: 999 }}>
+
+      </div>
+        <ChatWidget />
 
       <Footer />
     </>
