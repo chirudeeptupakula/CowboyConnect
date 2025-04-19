@@ -49,8 +49,7 @@ class EventOut(BaseModel):
     class Config:
         orm_mode = True
 
-from pydantic import BaseModel
-from datetime import datetime
+
 
 class ClubBase(BaseModel):
     name: str
@@ -83,14 +82,54 @@ class CourseCreate(BaseModel):
     course_code: str
     description: Optional[str] = None
 
-from pydantic import BaseModel
-from typing import Optional
+
 
 class CourseOut(BaseModel):
     id: int
     title: str
     description: Optional[str]
     created_by: int
+
+    class Config:
+        orm_mode = True
+
+# -----------------------
+# 📦 Club Volunteer
+# -----------------------
+
+class ClubVolunteerBase(BaseModel):
+    club_id: int
+
+class ClubVolunteerCreate(ClubVolunteerBase):
+    pass
+
+class ClubVolunteerOut(BaseModel):
+    id: int
+    student_id: int
+    club_id: int
+    joined_at: datetime
+
+    class Config:
+        orm_mode = True
+
+# -----------------------
+# ⏱️ Student Timesheet
+# -----------------------
+
+class TimesheetClockIn(BaseModel):
+    club_id: int
+    description: Optional[str] = ""
+
+class TimesheetClockOut(BaseModel):
+    timesheet_id: int
+
+class StudentTimesheetOut(BaseModel):
+    id: int
+    student_id: int
+    club_id: int
+    date: datetime
+    hours: float
+    description: Optional[str]
 
     class Config:
         orm_mode = True

@@ -128,3 +128,16 @@ class StudentTimesheet(Base):
     description = Column(String)
 
     student = relationship("User", back_populates="timesheets")
+
+class ClubVolunteer(Base):
+    __tablename__ = 'club_volunteers'
+
+    id = Column(Integer, primary_key=True)
+    student_id = Column(Integer, ForeignKey("users.id"))
+    club_id = Column(Integer, ForeignKey("clubs.id"))
+    joined_at = Column(DateTime, default=datetime.utcnow)
+
+    student = relationship("User", backref="volunteer_clubs")
+
+
+

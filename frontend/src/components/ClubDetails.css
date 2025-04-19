@@ -125,3 +125,19 @@
     padding: 1rem;
   }
 }
+
+.volunteer-history {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 2px dashed #aaa;
+}
+
+.volunteer-log-list {
+  list-style: none;
+  padding: 0;
+}
+
+.volunteer-log-list li {
+  margin-bottom: 0.5rem;
+}
+
